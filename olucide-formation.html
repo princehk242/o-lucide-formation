@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formation TikTok — o_lucide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --white: #f0ede8;
+  --gold: #c8a84b;
+  --gold-dim: rgba(200,168,75,0.10);
+  --gold-glow: rgba(200,168,75,0.18);
+  --gray-1: #111;
+  --gray-2: #1a1a1a;
+  --gray-3: #2a2a2a;
+  --gray-4: #444;
+  --gray-5: #888;
+  --gray-6: #bbb;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,168,75,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-line {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1px; height: 80px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  opacity: 0.4;
+}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.2s ease forwards;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 14vw, 12rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.4s ease forwards;
+}
+.hero-title span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.72em;
+}
+.hero-sub {
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--gray-6);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 3rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.6s ease forwards;
+}
+.hero-badges {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.8s ease forwards;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid rgba(200,168,75,0.25);
+  border-radius: 100px;
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION COMMON ── */
+section { position: relative; z-index: 1; }
+.section-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+/* ── ABOUT ── */
+.about {
+  padding: 7rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.about-avatar {
+  position: relative;
+}
+.about-avatar-frame {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 3/4;
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 4px;
+  background: var(--gray-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.about-avatar-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(8,8,8,0.8));
+}
+.avatar-placeholder {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 8rem;
+  color: rgba(200,168,75,0.15);
+  letter-spacing: 0.05em;
+}
+.avatar-label {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  right: 1.2rem;
+  z-index: 1;
+}
+.avatar-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.avatar-handle {
+  font-size: 12px;
+  color: var(--gray-5);
+}
+.about-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 0.92;
+  color: var(--white);
+  margin-bottom: 1.4rem;
+  letter-spacing: 0.01em;
+}
+.about-text h2 em {
+  color: var(--gold);
+  font-style: normal;
+}
+.about-text p {
+  font-size: 14px;
+  color: var(--gray-6);
+  line-height: 1.8;
+  margin-bottom: 0.8rem;
+}
+.stats-row {
+  display: flex;
+  gap: 2.4rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.stat-item .stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-item .stat-label {
+  font-size: 11px;
+  color: var(--gray-5);
+  margin-top: 2px;
+}
+
+/* ── OFFERS ── */
+.offers {
+  padding: 6rem 2rem 8rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.offers-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.offers-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 0.92;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+.offers-desc {
+  font-size: 14px;
+  color: var(--gray-5);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.offer-card {
+  background: var(--gray-1);
+  padding: 2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: background 0.2s;
+  position: relative;
+}
+.offer-card:hover {
+  background: var(--gray-2);
+}
+.offer-card.featured {
+  background: linear-gradient(160deg, #151208 0%, var(--gray-2) 100%);
+}
+.offer-card.featured::before {
+  content: 'POPULAIRE';
+  position: absolute;
+  top: -1px; left: 50%; transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--black);
+  background: var(--gold);
+  padding: 3px 12px;
+  border-radius: 0 0 6px 6px;
+}
+.offer-tier {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.offer-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+.offer-tagline {
+  font-size: 12px;
+  color: var(--gray-5);
+  line-height: 1.5;
+  margin-bottom: 1.6rem;
+  min-height: 3.2em;
+}
+.offer-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 1.6rem;
+}
+.price-amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.price-cur {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: var(--gold);
+  opacity: 0.7;
+}
+.offer-list {
+  list-style: none;
+  flex: 1;
+  margin-bottom: 2rem;
+}
+.offer-list li {
+  font-size: 12px;
+  color: var(--gray-6);
+  line-height: 1.6;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.offer-list li::before {
+  content: '—';
+  color: var(--gold);
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.offer-cta {
+  display: block;
+  text-align: center;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(200,168,75,0.35);
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+}
+.offer-cta:hover {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+}
+.offer-card.featured .offer-cta {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+  font-weight: 500;
+}
+.offer-card.featured .offer-cta:hover {
+  background: #dfc060;
+}
+
+/* ── ACCOMPAGNEMENT SPECIAL ── */
+.accomp-section {
+  padding: 0 2rem 8rem;
+}
+.accomp-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  border: 1px solid rgba(200,168,75,0.25);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f0e09 0%, var(--gray-1) 60%);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.accomp-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,168,75,0.08), transparent 70%);
+  pointer-events: none;
+}
+.accomp-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid rgba(200,168,75,0.3);
+  padding: 4px 12px;
+  border-radius: 100px;
+  display: inline-block;
+  margin-bottom: 1.2rem;
+}
+.accomp-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 3.8rem);
+  line-height: 0.92;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.accomp-title em {
+  color: var(--gold);
+  font-style: normal;
+}
+.accomp-desc {
+  font-size: 13px;
+  color: var(--gray-6);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+.accomp-items {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+.accomp-items li {
+  font-size: 13px;
+  color: var(--gray-6);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.accomp-items li::before {
+  content: '✦';
+  color: var(--gold);
+  font-size: 9px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.accomp-price-block {
+  text-align: center;
+  padding: 2.5rem;
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.3);
+}
+.accomp-price-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  margin-bottom: 0.8rem;
+}
+.accomp-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6rem;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.accomp-price-sub {
+  font-size: 12px;
+  color: var(--gray-5);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+.accomp-cta {
+  display: block;
+  padding: 1rem 2rem;
+  background: var(--gold);
+  color: var(--black);
+  text-align: center;
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 1rem;
+}
+.accomp-cta:hover { background: #dfc060; }
+.accomp-note {
+  font-size: 11px;
+  color: var(--gray-4);
+  text-align: center;
+}
+
+/* ── FAQ / WHY ── */
+.why-section {
+  padding: 6rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 3rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 900px;
+  margin: 3rem auto 0;
+}
+.why-item {
+  background: var(--gray-1);
+  padding: 2rem 1.8rem;
+}
+.why-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: rgba(200,168,75,0.15);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+.why-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+.why-text {
+  font-size: 12px;
+  color: var(--gray-5);
+  line-height: 1.7;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.footer-text {
+  font-size: 12px;
+  color: var(--gray-4);
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-avatar { display: none; }
+  .cards-grid { grid-template-columns: 1fr 1fr; }
+  .accomp-card { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 600px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .stats-row { gap: 1.5rem; }
+  .hero { padding: 5rem 1.4rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="eyebrow">Formation TikTok · o_lucide</div>
+  <h1 class="hero-title">
+    Apprends<br>
+    <span>comment je fais</span>
+  </h1>
+  <p class="hero-sub">De la première idée au montage CapCut — tout ce que j'utilise pour créer mes vidéos et gagner mes 10 000 premiers abonnés.</p>
+  <div class="hero-badges">
+    <span class="badge">✦ CapCut</span>
+    <span class="badge">✦ Méthode complète</span>
+    <span class="badge">✦ 4 niveaux disponibles</span>
+  </div>
+  <div class="hero-line"></div>
+</section>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section class="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-avatar">
+        <div class="about-avatar-frame">
+          <div class="avatar-placeholder">O_L</div>
+          <div class="avatar-label">
+            <div class="avatar-name">o_lucide</div>
+            <div class="avatar-handle">@o_lucide · TikTok</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-label">Qui suis-je</div>
+        <h2>Je fais des vidéos<br>qui <em>marchent.</em><br>Je vais te montrer comment.</h2>
+        <p>Des gens me demandent comment je fais mes vidéos. Ça marche bien sur TikTok, et j'ai décidé de partager exactement ma méthode — sans rien cacher.</p>
+        <p>Pas une formation théorique. Juste moi qui t'explique ce que je fais, pourquoi je le fais, et comment tu peux faire pareil.</p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-num">31,5K</div>
+            <div class="stat-label">Abonnés TikTok</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1,7M</div>
+            <div class="stat-label">J'aime reçus</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">12M</div>
+            <div class="stat-label">Vues au total</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ OFFERS ═══════════ -->
+<section class="offers">
+  <div class="offers-header reveal">
+    <div class="section-label">Les formations</div>
+    <h2 class="offers-title">Choisis ton niveau</h2>
+    <p class="offers-desc">Trois niveaux selon où tu en es. Tu paies uniquement pour ce dont tu as besoin.</p>
+  </div>
+
+  <div class="section-inner">
+    <div class="cards-grid reveal">
+
+      <!-- OFFRE 0 -->
+      <div class="offer-card">
+        <div class="offer-tier">Niveau 00</div>
+        <div class="offer-name">Starter PDF</div>
+        <div class="offer-tagline">Les bases expliquées dans un guide PDF complet. Parfait pour démarrer.</div>
+        <div class="offer-price">
+          <span class="price-amount">15</span>
+          <span class="price-cur">€</span>
+        </div>
+        <ul class="offer-list">
+          <li>Guide PDF complet à télécharger</li>
+          <li>Mes conseils essentiels expliqués</li>
+          <li>Les erreurs à éviter au départ</li>
+          <li>Pas de vidéo — lecture seule</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_7sY7sM2M0h0v47W1GL4Ni00" target="_blank" class="offer-cta">Je veux ça →</a>
+      </div>
+
+      <!-- OFFRE 1 -->
+      <div class="offer-card">
+        <div class="offer-tier">Niveau 01</div>
+        <div class="offer-name">Inspiration</div>
+        <div class="offer-tagline">Tu veux savoir où je trouve mes idées de vidéos.</div>
+        <div class="offer-price">
+          <span class="price-amount">40</span>
+          <span class="price-cur">€</span>
+        </div>
+        <ul class="offer-list">
+          <li>Mes sources d'inspiration au quotidien</li>
+          <li>Comment je choisis mes sujets</li>
+          <li>La méthode pour ne jamais manquer d'idées</li>
+          <li>Les types de sujets qui performent</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_9B6aEYdqEh0vgUIfxB4Ni01" target="_blank" class="offer-cta">Je veux ça →</a>
+      </div>
+
+      <!-- OFFRE 2 -->
+      <div class="offer-card">
+        <div class="offer-tier">Niveau 02</div>
+        <div class="offer-name">Méthode</div>
+        <div class="offer-tagline">Tu as déjà des bases. Je te montre exactement comment je fais mes vidéos.</div>
+        <div class="offer-price">
+          <span class="price-amount">50</span>
+          <span class="price-cur">€</span>
+        </div>
+        <ul class="offer-list">
+          <li>Mon workflow complet sur CapCut</li>
+          <li>Mes réglages, effets, transitions</li>
+          <li>Le pack des images que j'utilise</li>
+          <li>Ma structure de vidéo type</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_5kQeVe5Yc25Bawkbhl4Ni02" target="_blank" class="offer-cta">Je veux ça →</a>
+      </div>
+
+      <!-- OFFRE 3 FEATURED -->
+      <div class="offer-card featured">
+        <div class="offer-tier">Niveau 03</div>
+        <div class="offer-name">De A à Z</div>
+        <div class="offer-tagline">Tu pars de zéro. Je t'apprends tout — du montage jusqu'à la publication.</div>
+        <div class="offer-price">
+          <span class="price-amount">80</span>
+          <span class="price-cur">€</span>
+        </div>
+        <ul class="offer-list">
+          <li>CapCut depuis zéro, pas à pas</li>
+          <li>Tout le contenu des niveaux 01 et 02</li>
+          <li>Pack complet d'images et ressources</li>
+          <li>La structure exacte de mes vidéos</li>
+          <li>Trouver ses idées + les mettre en scène</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_3cI7sMgCQ7pV47Wetx4Ni03" target="_blank" class="offer-cta">Je veux ça →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ACCOMPAGNEMENT ═══════════ -->
+<section class="accomp-section">
+  <div class="section-inner">
+    <div class="accomp-card reveal">
+      <div>
+        <span class="accomp-badge">✦ Offre Premium</span>
+        <h2 class="accomp-title">Accompagnement<br><em>10 000 abonnés</em></h2>
+        <p class="accomp-desc">Tu veux que je suive ton évolution et que je te montre personnellement comment faire tes premiers 10 000 abonnés sur TikTok — le seuil où la monétisation se débloque.</p>
+        <ul class="accomp-items">
+          <li>Je suis ton compte et ton évolution en direct</li>
+          <li>Je t'explique quoi ajuster pour progresser vite</li>
+          <li>Tu crées le même type de contenu que moi, adapté à toi</li>
+          <li>Accès à tout le contenu des niveaux 01, 02 et 03</li>
+          <li>Objectif clair : atteindre les 10 000 abonnés pour monétiser</li>
+        </ul>
+      </div>
+      <div class="accomp-price-block">
+        <div class="accomp-price-label">Tarif accompagnement</div>
+        <div class="accomp-price">100<span style="font-size:2rem;color:var(--gold);opacity:0.7">€</span></div>
+        <div class="accomp-price-sub">Suivi personnalisé jusqu'aux<br>10 000 abonnés</div>
+        <a href="https://buy.stripe.com/test_4gM7sM9aofWrawk1GL4Ni04" target="_blank" class="accomp-cta">Je veux être accompagné(e)</a>
+        <div class="accomp-note">Places limitées · Candidature examinée</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ WHY ═══════════ -->
+<section class="why-section">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center">Pourquoi cette formation</div>
+    <div class="why-grid reveal">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div class="why-title">Ce que j'utilise vraiment</div>
+        <div class="why-text">Pas de théorie inutile. Tu vois exactement CapCut comme je l'utilise moi, avec mes vrais réglages et mes vraies techniques.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div class="why-title">Le dossier de ressources</div>
+        <div class="why-text">Je te fournis les images, assets et éléments visuels que j'utilise dans mes montages. Tu repars avec tout ce qu'il faut pour commencer.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div class="why-title">Un objectif concret</div>
+        <div class="why-text">10 000 abonnés sur TikTok, c'est le seuil de monétisation. Tout ce que j'enseigne est orienté vers cet objectif réel et mesurable.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="footer-logo">o_lucide</div>
+  <div class="footer-text">Formation TikTok · Tous droits réservés</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
