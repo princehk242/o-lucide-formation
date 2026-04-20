@@ -1,2 +1,0 @@
-# o-lucide-formation
-formation
